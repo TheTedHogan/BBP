@@ -11,6 +11,7 @@
 (def view (r/adapt-react-class (.-View js/React)))
 (def image (r/adapt-react-class (.-Image js/React)))
 (def touchable-highlight (r/adapt-react-class (.-TouchableHighlight js/React)))
+(def text-box (r/adapt-react-class (.-TextInput js/React)))
 
 (def logo-img (js/require "./images/cljs.png"))
 
@@ -24,9 +25,18 @@
        [text {:style {:font-size 30 :font-weight "100" :margin-bottom 20 :text-align "center"}} @greeting]
        [image {:source logo-img
                :style  {:width 80 :height 80 :margin-bottom 30}}]
-       [touchable-highlight {:style {:background-color "#999" :padding 10 :border-radius 5}
+       [touchable-highlight {:style {:background-color "#999" :padding 10
+                                     :border-radius 5 :margin-bottom 20}
                              :on-press #(alert "HELLO!")}
-        [text {:style {:color "white" :text-align "center" :font-weight "bold"}} "press me"]]])))
+        [text {:style {:color "white" :text-align "center" :font-weight "bold"}} "press me"]]
+       [text-box {:style          {:height       40
+                                   :border-color "#999"
+                                   :border-width 1}
+                  :on-change-text #(if (< 10 (count %))
+                                    (do
+                                      (dispatch [:set-greeting ""])
+                                      (alert "Too Many Letters"))
+                                    (dispatch [:set-greeting %]))}]])))
 
 (defn init []
       (dispatch-sync [:initialize-db])
