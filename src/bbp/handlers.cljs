@@ -30,3 +30,8 @@
   validate-schema-mw
   (fn [db [_ value]]
     (assoc db :greeting value)))
+
+(register-handler :page-change
+                  validate-schema-mw
+                  (fn [db [_ value]]
+                    (assoc db :main-view value)))

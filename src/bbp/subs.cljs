@@ -7,3 +7,9 @@
   (fn [db _]
     (reaction
       (get @db :greeting))))
+
+(register-sub
+ :main-view
+ (fn [db [sid formulas]]
+   (reaction
+    (get @db :main-view))))
